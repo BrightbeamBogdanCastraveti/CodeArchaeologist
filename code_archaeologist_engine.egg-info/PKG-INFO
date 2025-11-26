@@ -1,0 +1,123 @@
+Metadata-Version: 2.4
+Name: code-archaeologist-engine
+Version: 0.1.0
+Summary: Analysis engine for detecting and fixing issues in AI-generated code
+Home-page: https://github.com/yourusername/code-archaeologist
+Author: Code Archaeologist Team
+Classifier: Development Status :: 3 - Alpha
+Classifier: Intended Audience :: Developers
+Classifier: Topic :: Software Development :: Quality Assurance
+Classifier: Topic :: Security
+Classifier: License :: OSI Approved :: MIT License
+Classifier: Programming Language :: Python :: 3
+Classifier: Programming Language :: Python :: 3.10
+Classifier: Programming Language :: Python :: 3.11
+Requires-Python: >=3.10
+Description-Content-Type: text/markdown
+Requires-Dist: fastapi>=0.109.0
+Requires-Dist: uvicorn[standard]>=0.27.0
+Requires-Dist: pydantic>=2.5.3
+Requires-Dist: bandit>=1.7.6
+Requires-Dist: semgrep>=1.55.0
+Requires-Dist: anthropic>=0.18.1
+Requires-Dist: sqlalchemy>=2.0.25
+Requires-Dist: click>=8.1.7
+Provides-Extra: dev
+Requires-Dist: pytest>=7.4.4; extra == "dev"
+Requires-Dist: pytest-cov>=4.1.0; extra == "dev"
+Requires-Dist: black>=24.1.1; extra == "dev"
+Requires-Dist: isort>=5.13.2; extra == "dev"
+Requires-Dist: ruff>=0.1.14; extra == "dev"
+Requires-Dist: mypy>=1.8.0; extra == "dev"
+Dynamic: author
+Dynamic: classifier
+Dynamic: description
+Dynamic: description-content-type
+Dynamic: home-page
+Dynamic: provides-extra
+Dynamic: requires-dist
+Dynamic: requires-python
+Dynamic: summary
+
+# Analysis Engine
+
+The brain of Code Archaeologist - a Python microservice that detects vulnerabilities, architecture violations, and "vibe coding" patterns in AI-generated codebases.
+
+## Features
+
+- **418+ Vulnerability Patterns** across OWASP 2013-2024
+- **Self-Validating** - Tests against known vulnerabilities on startup
+- **Confidence Scoring** - Every finding includes confidence level
+- **Framework-Specific** - Deep knowledge of Django, React, FastAPI, Flask
+- **AI-Powered Fixes** - Generates fixes using Claude API
+- **Race Condition Detection** - Specialized TOCTOU and async race detection
+
+## Architecture
+
+```
+analysis-engine/
+├── core/              # Core scanning logic
+├── detectors/         # Specific vulnerability detectors
+├── frameworks/        # Framework-specific analyzers
+├── owasp/            # OWASP pattern libraries
+├── ai/               # AI fix generation
+├── reports/          # Report generation
+├── database/         # Data models and storage
+└── api/              # FastAPI REST API
+```
+
+## Quick Start
+
+```bash
+# Install dependencies
+pip install -r requirements.txt
+
+# Run self-validation tests
+pytest tests/
+
+# Start the API server
+python -m api.main
+
+# Or use the CLI
+python -m cli.main analyze /path/to/project
+```
+
+## API Endpoints
+
+```
+POST /api/v1/scan          - Scan a codebase
+GET  /api/v1/scan/{id}     - Get scan results
+POST /api/v1/fix           - Generate fix for an issue
+GET  /api/v1/patterns      - List all patterns
+GET  /api/v1/health        - Health check
+```
+
+## Adding New Patterns
+
+See [CONTRIBUTING.md](../docs/CONTRIBUTING.md) for guidelines on adding new vulnerability patterns.
+
+## Testing
+
+```bash
+# Run all tests
+pytest
+
+# Run with coverage
+pytest --cov --cov-fail-under=85
+
+# Run specific test file
+pytest tests/detectors/test_sql_injection.py
+```
+
+## Code Quality
+
+```bash
+# Format code
+black . && isort .
+
+# Lint
+ruff check .
+
+# Type checking
+mypy .
+```
